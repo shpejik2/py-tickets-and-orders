@@ -68,7 +68,8 @@ class Order(models.Model):
     )
 
     def __str__(self) -> str:
-        return datetime.strftime(self.created_at, "%Y-%m-%d %H:%M:%S")
+        time = datetime.strftime(self.created_at, "%Y-%m-%d %H:%M:%S")
+        return f"<Order: {time}>"
 
     class Meta:
         ordering = ["-created_at"]
@@ -94,9 +95,9 @@ class Ticket(models.Model):
             "%Y-%m-%d %H:%M:%S"
         )
         return (
-            f"{self.movie_session.movie.title} "
+            f"<Ticket: {self.movie_session.movie.title} "
             f"{show_time} "
-            f"(row: {self.row}, seat: {self.seat})"
+            f"(row: {self.row}, seat: {self.seat})>"
         )
 
     def clean(self) -> None:
@@ -120,7 +121,7 @@ class Ticket(models.Model):
 
     def save(self, *args, **kwargs) -> None:
         self.full_clean()
-        return super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     class Meta:
         constraints = [
